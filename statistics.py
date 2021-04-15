@@ -39,4 +39,3 @@ def correlation(first_list_of_values, second_list_of_values):
     result = covariance(first_list_of_values, second_list_of_values)/(first_list_variance*second_list_variance)
     return result
 
-
