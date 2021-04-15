@@ -50,7 +50,7 @@ def run_analysis():
     weakest_pair = ("aaa", "bbb")
     low_correlation = 0.1
     print('The weakest linear relationship is between: "{}","{}". '
-          'The value is: {.4f}'.format(*weakest_pair, low_correlation))  # * converts list to arguments.
+          'The value is: {:.4f}'.format(*weakest_pair, low_correlation))  # * converts list to arguments.
     # Line 53 is equivalent to line 48, this is just other way to use list as arguments
 
 
