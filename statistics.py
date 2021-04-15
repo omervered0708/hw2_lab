@@ -28,13 +28,15 @@ def covariance(first_list_of_values, second_list_of_values):
     average2 = mean(second_list_of_values)
     length = len(first_list_of_values)
     co_sum = sum([(first_list_of_values[i]-average1)*(second_list_of_values[i]-average2) for i in range(length)])
-    result = co_sum/(len(first_list_of_values))
+    result = co_sum/(len(first_list_of_values)-1)
     return result
 
 
 def correlation(first_list_of_values, second_list_of_values):
     result = 0
-    # Place your code here
+    first_list_variance = variance(first_list_of_values)
+    second_list_variance = variance(second_list_of_values)
+    result = covariance(first_list_of_values, second_list_of_values)/(first_list_variance*second_list_variance)
     return result
 
 
