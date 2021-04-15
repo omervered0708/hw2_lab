@@ -45,7 +45,7 @@ def run_analysis():
     strongest_pair = ("aaa", "bbb")
     high_correlation = -0.9
     print('The strongest linear relationship is between: "{}","{}". '
-          'The value is: {.4f}'.format(strongest_pair[0], strongest_pair[1], high_correlation))
+          'The value is: {:.4f}'.format(strongest_pair[0], strongest_pair[1], high_correlation))
 
     weakest_pair = ("aaa", "bbb")
     low_correlation = 0.1
