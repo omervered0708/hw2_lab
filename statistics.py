@@ -24,7 +24,10 @@ def variance(list_of_values):
 
 def covariance(first_list_of_values, second_list_of_values):
     result = 0
-    # Place your code here
+    average1 = mean(first_list_of_values)
+    average2 = mean(second_list_of_values)
+    length = len(first_list_of_values)
+    co_sum = sum([(first_list_of_values[i]-average1)*(second_list_of_values[i]-average2) for i in range(length)])
     return result
 
 
