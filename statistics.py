@@ -23,6 +23,12 @@ def variance(list_of_values):
 
 
 def covariance(first_list_of_values, second_list_of_values):
+    """
+    find covariance between two features
+    :param first_list_of_values: list of values of the first feature
+    :param second_list_of_values: list of values of the second feature
+    :return: returns covariance
+    """
     average1 = mean(first_list_of_values)
     average2 = mean(second_list_of_values)
     length = len(first_list_of_values)
@@ -32,6 +38,12 @@ def covariance(first_list_of_values, second_list_of_values):
 
 
 def correlation(first_list_of_values, second_list_of_values):
+    """
+    find correlation between two features
+    :param first_list_of_values: list of values of the first feature
+    :param second_list_of_values: list of values of the second feature
+    :return: returns correlation
+    """
     first_list_std = variance(first_list_of_values)**0.5
     second_list_std = variance(second_list_of_values)**0.5
     result = covariance(first_list_of_values, second_list_of_values)/(first_list_std*second_list_std)
@@ -44,13 +56,18 @@ def find_strongest_pair(data):
     :param data: a dictionary whose keys are features and values are lists of feature's values
     :return: tuple of the alphabetically sorted pair in places 0 and 1 and the value of their correlation in 2
     """
-    strongest_pair = ([], [], -2.0)
-    enum_keys = enumerate(data.keys())
-    for out_key_index, out_key in enum_keys:
-        for in_key_index, in_key in enum_keys:
-            if in_key_index > out_key_index:
+    strongest_pair = ([], [], 0)
+    sorted_keys = sorted(data.keys())
+    for out_key in sorted_keys:
+        for in_key in sorted_keys:
+            # compare features in order to not check same pair twice
+            if in_key > out_key:
                 curr_corr = correlation(data[out_key], data[in_key])
-                if curr_corr > strongest_pair[2]:
+                if abs(curr_corr) > abs(strongest_pair[2]):
+                    strongest_pair = (out_key, in_key, curr_corr)
+                # if the current correlation is 0 and 'strongest_pair' is still empty set it to the current pair
+                # if the current correlation is 0 but there is a previous pair with correlation 0 don't make a change
+                elif curr_corr == 0 and strongest_pair == ([], [], 0):
                     strongest_pair = (out_key, in_key, curr_corr)
 
     return strongest_pair
@@ -63,15 +80,13 @@ def find_weakest_pair(data):
     :return: tuple of the alphabetically sorted pair in places 0 and 1 and the value of their correlation in 2
     """
     weakest_pair = ([], [], 2.0)
-    enum_keys = enumerate(data.keys())
-    counter = 0
-    for out_key_index, out_key in enum_keys:
-        for in_key_index, in_key in enum_keys:
-            counter += 1
-            if in_key_index > out_key_index:
+    sorted_keys = sorted(data.keys())
+    for out_key in sorted_keys:
+        for in_key in sorted_keys:
+            # compare features in order to not check same pair twice
+            if in_key > out_key:
                 curr_corr = correlation(data[out_key], data[in_key])
-                if curr_corr < weakest_pair[2]:
+                if abs(curr_corr) < abs(weakest_pair[2]):
                     weakest_pair = (out_key, in_key, curr_corr)
 
-    print(len(tuple(enum_keys)), counter, sep=', ')
     return weakest_pair

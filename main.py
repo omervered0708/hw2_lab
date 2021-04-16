@@ -1,4 +1,4 @@
-from statistics import mean, median, variance, correlation, find_strongest_pair, find_weakest_pair
+from statistics import mean, median, variance, find_strongest_pair, find_weakest_pair
 import csv
 
 
