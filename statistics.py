@@ -23,7 +23,6 @@ def variance(list_of_values):
 
 
 def covariance(first_list_of_values, second_list_of_values):
-    result = 0
     average1 = mean(first_list_of_values)
     average2 = mean(second_list_of_values)
     length = len(first_list_of_values)
@@ -33,9 +32,46 @@ def covariance(first_list_of_values, second_list_of_values):
 
 
 def correlation(first_list_of_values, second_list_of_values):
-    result = 0
-    first_list_variance = variance(first_list_of_values)
-    second_list_variance = variance(second_list_of_values)
-    result = covariance(first_list_of_values, second_list_of_values)/(first_list_variance*second_list_variance)
+    first_list_std = variance(first_list_of_values)**0.5
+    second_list_std = variance(second_list_of_values)**0.5
+    result = covariance(first_list_of_values, second_list_of_values)/(first_list_std*second_list_std)
     return result
 
+
+def find_strongest_pair(data):
+    """
+    find pair with strongest correlation
+    :param data: a dictionary whose keys are features and values are lists of feature's values
+    :return: tuple of the alphabetically sorted pair in places 0 and 1 and the value of their correlation in 2
+    """
+    strongest_pair = ([], [], -2.0)
+    enum_keys = enumerate(data.keys())
+    for out_key_index, out_key in enum_keys:
+        for in_key_index, in_key in enum_keys:
+            if in_key_index > out_key_index:
+                curr_corr = correlation(data[out_key], data[in_key])
+                if curr_corr > strongest_pair[2]:
+                    strongest_pair = (out_key, in_key, curr_corr)
+
+    return strongest_pair
+
+
+def find_weakest_pair(data):
+    """
+    find pair with weakest correlation
+    :param data: a dictionary whose keys are features and values are lists of feature's values
+    :return: tuple of the alphabetically sorted pair in places 0 and 1 and the value of their correlation in 2
+    """
+    weakest_pair = ([], [], 2.0)
+    enum_keys = enumerate(data.keys())
+    counter = 0
+    for out_key_index, out_key in enum_keys:
+        for in_key_index, in_key in enum_keys:
+            counter += 1
+            if in_key_index > out_key_index:
+                curr_corr = correlation(data[out_key], data[in_key])
+                if curr_corr < weakest_pair[2]:
+                    weakest_pair = (out_key, in_key, curr_corr)
+
+    print(len(tuple(enum_keys)), counter, sep=', ')
+    return weakest_pair

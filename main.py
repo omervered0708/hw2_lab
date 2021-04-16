@@ -1,4 +1,4 @@
-from statistics import mean, median, variance, correlation
+from statistics import mean, median, variance, correlation, find_strongest_pair, find_weakest_pair
 import csv
 
 
@@ -42,13 +42,15 @@ def run_analysis():
             feature_name, mean(list_of_values), median(list_of_values), variance(list_of_values)**0.5))
 
     # here you should compute correlations. Be careful, pair should be sorted before printing
-    strongest_pair = ("aaa", "bbb")
-    high_correlation = -0.9
+    strongest_pair = find_strongest_pair(data)
+    high_correlation = strongest_pair[2]
+    strongest_pair = sorted([strongest_pair[0], strongest_pair[1]])
     print('The strongest linear relationship is between: "{}","{}". '
           'The value is: {:.4f}'.format(strongest_pair[0], strongest_pair[1], high_correlation))
 
-    weakest_pair = ("aaa", "bbb")
-    low_correlation = 0.1
+    weakest_pair = find_weakest_pair(data)
+    low_correlation = weakest_pair[2]
+    weakest_pair = sorted([weakest_pair[0], weakest_pair[1]])
     print('The weakest linear relationship is between: "{}","{}". '
           'The value is: {:.4f}'.format(*weakest_pair, low_correlation))  # * converts list to arguments.
     # Line 53 is equivalent to line 48, this is just other way to use list as arguments
